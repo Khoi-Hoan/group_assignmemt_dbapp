@@ -1,3 +1,6 @@
+CREATE DATABASE auction;
+USE auction;
+
 CREATE TABLE `Branch` (
   `Branch_Code` char(9),
   `Branch_Name` varchar(50),
@@ -14,7 +17,7 @@ CREATE TABLE `Customer` (
   `Phone` varchar(50),
   `First_Name` varchar(20),
   `Last_Name` varchar(20),
-  `Customer_ID` int(9),
+  `Customer_ID` char(12),
   `Address` varchar(255),
   `City` varchar(20),
   `Country` varchar(20),
@@ -25,13 +28,6 @@ CREATE TABLE `Customer` (
   KEY `UN` (`Phone`, `Customer_ID`)
 );
 
-CREATE TABLE `Auction` (
-  `Auction_ID` int(9),
-  `Customer_Email` Type,
-  PRIMARY KEY (`Auction_ID`),
-  FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
-);
-
 CREATE TABLE `Bid` (
   `Customer_Email` varchar(255),
   `Auction_ID` int(9),
@@ -40,4 +36,3 @@ CREATE TABLE `Bid` (
   FOREIGN KEY (`Auction_ID`) REFERENCES `Auction`(`Auction_ID`),
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
 );
-
