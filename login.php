@@ -6,14 +6,16 @@ if (isset($_POST['act'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM Customer WHERE(email='$email' or phone = '$phone')";
+  $sql = "SELECT * FROM Customer WHERE(email='$email')";
   $stmt = $dbh->query($sql);
   $row = $stmt->fetch(PSDO::FETCH_ASSOC);
 
   if ($row && password_verify($password, $row['password'])) {
     echo "<h2>Login successful. Welcome $username</h2>";
+    header("Location: .php");
   } else {
     echo "<h2>Login failed.</h2>";
+    header("Location: login.php");
   }
 }
 
