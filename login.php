@@ -2,6 +2,9 @@
 
 require_once 'db.php';
 
+if (isset($_POST['register'])){
+  header('Location: http://localhost:8000/register.php')
+}
 if (isset($_POST['act'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -12,10 +15,10 @@ if (isset($_POST['act'])) {
 
   if ($row && password_verify($password, $row['password'])) {
     echo "<h2>Login successful. Welcome $username</h2>";
-    header("Location: .php");
+    header("Location: aution.php");
   } else {
     echo "<h2>Login failed.</h2>";
-    header("Location: login.php");
+    header("Location: http://localhost:8000/login.php");
   }
 }
 
@@ -32,5 +35,8 @@ if (isset($_POST['act'])) {
    </div>
    <div>
     <input type="submit" name="act" value="Login">
+   </div>
+   <div>
+    <input type="submit" name="register" value="Sign up">
    </div>
 </form>
