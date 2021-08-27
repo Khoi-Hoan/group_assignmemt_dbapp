@@ -6,10 +6,10 @@ if (isset($_POST['register'])){
   header('Location: http://localhost:8000/register.php');
 }
 if (isset($_POST['act'])) {
-  $email = $_POST['email'];
+  $username = $_POST['user'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM Customer WHERE email='$email'";
+  $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
   $stmt = $dbh->query($sql);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -26,8 +26,8 @@ if (isset($_POST['act'])) {
 
 <form method="post">
   <div>
-    <span>Email</span><br>
-    <input type="email" name="email">
+    <span>User</span><br>
+    <input type="text" name="user">
    </div>
   <div>
     <span>Password</span><br>
