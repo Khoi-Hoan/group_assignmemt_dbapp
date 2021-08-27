@@ -13,7 +13,7 @@ CREATE TABLE `Branch` (
 CREATE TABLE `Customer` (
   `Customer_Email` varchar(255),
   `Branch_Code` char(9),
-  `Password` varchar(18),
+  `Password` char(60),
   `Phone` varchar(50),
   `First_Name` varchar(20),
   `Last_Name` varchar(20),

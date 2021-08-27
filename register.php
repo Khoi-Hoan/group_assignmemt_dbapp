@@ -17,13 +17,14 @@ require_once('db.php')
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $password = $_POST['password'];
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $address = $_POST['address'];
         $city = $_POST['city'];
         $country = $_POST['country'];
 
         $sql = "insert into customer (Customer_Email, Password, Phone, First_Name, Last_Name, Customer_ID, Address, City, Country) values (?,?,?,?,?,?,?,?,?)";
         $stmt = $db -> prepare($sql);
-        $result = $stmt -> execute([$email, $password, $phone, $firstname, $lastname, $id, $address, $city, $country]);
+        $result = $stmt -> execute([$email, $hash, $phone, $firstname, $lastname, $id, $address, $city, $country]);
         if ($result){
           echo 'Create an account Successfully'
         }

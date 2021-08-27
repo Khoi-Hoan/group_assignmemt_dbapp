@@ -4,8 +4,7 @@ require_once 'db.php';
 
 if (isset($_POST['act'])) {
   $email = $_POST['email'];
-   $phone = $_POST['phone'];
-    $password = $_POST['password'];
+  $password = $_POST['password'];
 
   $sql = "SELECT * FROM Customer WHERE(email='$email' or phone = '$phone')";
   $stmt = $dbh->query($sql);
@@ -22,12 +21,12 @@ if (isset($_POST['act'])) {
 
 <form method="post">
   <div>
-    <span>Username</span><br>
-    <input type="text" name="phone or email">
+    <span>Email</span><br>
+    <input type="email" name="email" required>
    </div>
   <div>
     <span>Password</span><br>
-    <input type="password" name="password">
+    <input type="password" name="password" required>
    </div>
    <div>
     <input type="submit" name="act" value="Login">
