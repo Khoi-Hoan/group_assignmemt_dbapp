@@ -11,7 +11,7 @@ CREATE TABLE `Branch` (
 );
 
 CREATE TABLE `Customer` (
-  `Customer_Email` varchar(255),
+  `Customer_Email` varchar(100),
   `Branch_Code` char(9),
   `Password` char(60),
   `Phone` char(10),

@@ -27,7 +27,7 @@ require_once('db.php')
         $result = $stmt->execute([$email, $hash, $phone, $firstname, $lastname, $id, $address, $city, $country]);
         if ($result){
           echo 'Create an account Successfully';
-          header('Location: http://localhost:8000/login.php')
+          header('Location: http://localhost:8000/login.php');
         }
       }
       ?>

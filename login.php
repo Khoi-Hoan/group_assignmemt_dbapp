@@ -3,7 +3,7 @@
 require_once 'db.php';
 
 if (isset($_POST['register'])){
-  header('Location: http://localhost:8000/register.php')
+  header('Location: http://localhost:8000/register.php');
 }
 if (isset($_POST['act'])) {
   $email = $_POST['email'];
@@ -27,11 +27,11 @@ if (isset($_POST['act'])) {
 <form method="post">
   <div>
     <span>Email</span><br>
-    <input type="email" name="email" required>
+    <input type="email" name="email">
    </div>
   <div>
     <span>Password</span><br>
-    <input type="password" name="password" required>
+    <input type="password" name="password">
    </div>
    <div>
     <input type="submit" name="act" value="Login">
