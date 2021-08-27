@@ -14,7 +14,7 @@ CREATE TABLE `Customer` (
   `Customer_Email` varchar(255),
   `Branch_Code` char(9),
   `Password` char(60),
-  `Phone` varchar(50),
+  `Phone` char(10),
   `First_Name` varchar(20),
   `Last_Name` varchar(20),
   `Customer_ID` char(12),

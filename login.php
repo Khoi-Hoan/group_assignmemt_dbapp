@@ -6,9 +6,9 @@ if (isset($_POST['act'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM Customer WHERE(email='$email')";
+  $sql = "SELECT * FROM Customer WHERE email='$email'";
   $stmt = $dbh->query($sql);
-  $row = $stmt->fetch(PSDO::FETCH_ASSOC);
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if ($row && password_verify($password, $row['password'])) {
     echo "<h2>Login successful. Welcome $username</h2>";

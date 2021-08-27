@@ -23,10 +23,10 @@ require_once('db.php')
         $country = $_POST['country'];
 
         $sql = "insert into customer (Customer_Email, Password, Phone, First_Name, Last_Name, Customer_ID, Address, City, Country) values (?,?,?,?,?,?,?,?,?)";
-        $stmt = $db -> prepare($sql);
-        $result = $stmt -> execute([$email, $hash, $phone, $firstname, $lastname, $id, $address, $city, $country]);
+        $stmt = $dbh->prepare($sql);
+        $result = $stmt->execute([$email, $hash, $phone, $firstname, $lastname, $id, $address, $city, $country]);
         if ($result){
-          echo 'Create an account Successfully'
+          echo 'Create an account Successfully';
         }
       }
       ?>
