@@ -1,3 +1,4 @@
+
 CREATE DATABASE auction;
 USE auction;
 
@@ -31,7 +32,7 @@ CREATE TABLE `Customer` (
 CREATE TABLE `Bid` (
   `Customer_Email` varchar(255),
   `Auction_ID` int(9),
-  `Bid` money,
+  `Bid` float,
   PRIMARY KEY (`Customer_Email`, `Auction_ID`),
   FOREIGN KEY (`Auction_ID`) REFERENCES `Auction`(`Auction_ID`),
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
