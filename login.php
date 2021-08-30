@@ -17,7 +17,7 @@ if (isset($_POST['act'])) {
     echo "<h2>Login successful. Welcome $username</h2>";
     header("Location: aution.php");
   } else {
-    echo "<h2>Login failed. Please try again</h2>";
+    echo "<p>Login failed. Please try again<p>";
   }
 }
 
