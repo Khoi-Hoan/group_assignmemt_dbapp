@@ -32,7 +32,7 @@ require_once('login.php');
         $res = $collection->insertOne([
            'productName' => $name,
            'minimunBid' => $minimum,
-           'closingDate' = >$date,
+           'closingDate' => $date,
            'ownerEmail' => $row['Customer_Email'],
            $f1 = $v1,
            $f2 = $v2,
@@ -41,7 +41,7 @@ require_once('login.php');
            $f5 = $v5
         ]);
 
-      ?>
+        ?>
     </div>
     <div>
       <form method="post">

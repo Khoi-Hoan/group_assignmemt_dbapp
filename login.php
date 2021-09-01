@@ -12,11 +12,11 @@ if (isset($_POST['act'])) {
     header("Location: admin.php");
   }
   $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
-  global $stmt = $dbh->query($sql);
+  $stmt = $dbh->query($sql);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if ($row && password_verify($password, $row['Password'])) {
-    header("Location: aution.php");
+    header("Location: view.php");
   } else {
     echo "<p>Login failed. Please try again<p>";
   }
