@@ -37,3 +37,5 @@ CREATE TABLE `Bid` (
   FOREIGN KEY (`Auction_ID`) REFERENCES `Auction`(`Auction_ID`),
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
 );
+
+ 
