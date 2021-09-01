@@ -1,14 +1,7 @@
 <?php
+session_start();
 require_once('mongodb.php');
-require_once('login.php');
 ?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>User Register | PHP</title>
-  </head>
-  <body>
     <div>
       <?php
       if(isset($_POST['create'])){
@@ -27,13 +20,11 @@ require_once('login.php');
         $f5 = $_POST['f5'];
         $v5 = $_POST['v5'];
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
         $res = $collection->insertOne([
            'productName' => $name,
            'minimunBid' => $minimum,
            'closingDate' => $date,
-           'ownerEmail' => $row['Customer_Email'],
+           'ownerEmail' => $_SESSION['Customer_Email'],
            $f1 = $v1,
            $f2 = $v2,
            $f3 = $v3,
@@ -66,9 +57,7 @@ require_once('login.php');
           <p><input type="text" name="f4"><b>:</b><input type="text" name="v4"></p>
           <p><input type="text" name="f5"><b>:</b><input type="text" name="v5"></p>
 
-          <p><input type="submit" name="create" value="create"</p>
+          <p><input type="submit" name="create" value="create"></p>
         </div>
       </form>
     </div>
-  </body>
-</html>

@@ -1,12 +1,6 @@
 <?php
 require_once('db.php')
 ?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>User Register | PHP</title>
-  </head>
   <body>
     <div>
       <?php

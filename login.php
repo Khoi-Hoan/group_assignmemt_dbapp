@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'db.php';
 
 if (isset($_POST['register'])){
@@ -14,6 +14,8 @@ if (isset($_POST['act'])) {
   $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
   $stmt = $dbh->query($sql);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  $_SESSION["Customer_Email"] = $row['Customer_Email'];
 
   if ($row && password_verify($password, $row['Password'])) {
     header("Location: view.php");
