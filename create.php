@@ -1,40 +1,38 @@
 <?php
 session_start();
-require_once('mongodb.php');
+require_once 'vendor/autoload.php';
+$client = new MongoDB\Client('mongodb://localhost:27017');
+$collection = $client->auction->auction;
+
+if(isset($_POST['create'])){
+
+  $name = $_POST['name'];
+  $minimum = $_POST['minimum'];
+  $date = $_POST['date'];
+  $f1 = $_POST['f1'];
+  $v1 = $_POST['v1'];
+  $f2 = $_POST['f2'];
+  $v2 = $_POST['v2'];
+  $f3 = $_POST['f3'];
+  $v3 = $_POST['v3'];
+  $f4 = $_POST['f4'];
+  $v4 = $_POST['v4'];
+  $f5 = $_POST['f5'];
+  $v5 = $_POST['v5'];
+
+  $res = $collection->insertOne([
+    'productName' => $name,
+    'minimunBid' => $minimum,
+    'closingDate' => $date,
+    'ownerEmail' => $_SESSION['Customer_Email'],
+    $f1 => $v1,
+    $f2 => $v2,
+    $f3 => $v3,
+    $f4 => $v4,
+    $f5 => $v5
+  ]);
+
 ?>
-    <div>
-      <?php
-      if(isset($_POST['create'])){
-
-        $name = $_POST['name'];
-        $minimum = $_POST['minimum'];
-        $date = $_POST['date'];
-        $f1 = $_POST['f1'];
-        $v1 = $_POST['v1'];
-        $f2 = $_POST['f2'];
-        $v2 = $_POST['v2'];
-        $f3 = $_POST['f3'];
-        $v3 = $_POST['v3'];
-        $f4 = $_POST['f4'];
-        $v4 = $_POST['v4'];
-        $f5 = $_POST['f5'];
-        $v5 = $_POST['v5'];
-
-        $res = $collection->insertOne([
-           'productName' => $name,
-           'minimunBid' => $minimum,
-           'closingDate' => $date,
-           'ownerEmail' => $_SESSION['Customer_Email'],
-           $f1 = $v1,
-           $f2 = $v2,
-           $f3 = $v3,
-           $f4 = $v4,
-           $f5 = $v5
-        ]);
-
-        ?>
-    </div>
-    <div>
       <form method="post">
         <div>
           <h1>Create an auction</h1>
@@ -60,4 +58,3 @@ require_once('mongodb.php');
           <p><input type="submit" name="create" value="create"></p>
         </div>
       </form>
-    </div>

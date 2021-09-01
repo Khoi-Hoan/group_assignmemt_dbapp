@@ -11,7 +11,7 @@ session_start();
 
 require_once 'vendor/autoload.php';
 $client = new MongoDB\Client('mongodb://localhost:27017');
-$collection = $client->auction->aution
+$collection = $client->auction->auction;
 
 if (isset($_POST['bid'])){
   header('Location: bid.php');
@@ -26,6 +26,7 @@ foreach ($document as $one) {
     echo 'ID : ' . $one['_id'] . '<br>';
     echo 'Product : ' . $one['productName'] . '<br>';
     echo 'Minimum Bid : ' . $one['minimunBid'] . '<br>';
-    echo 'Closing Date: ' . $one['ownerEmail'] . '<br>';
+    echo 'Closing Date: ' . $one['closingDate'] . '<br>';
+    echo 'Seller: ' . $one['ownerEmail'] . '<br>';
 }
 ?>
