@@ -33,8 +33,8 @@ require_once('db.php')
       ?>
     </div>
     <div>
-      <form action="register.php" method="post">
-        <div class="container">
+      <form method="post">
+        <div>
           <h1>Register</h1>
           <p>Fill up the form with correct values.</p>
           <p><label for="email"><b>E-mail</b></label>
