@@ -8,19 +8,22 @@ if (isset($_POST['register'])){
 if (isset($_POST['act'])) {
   $username = $_POST['user'];
   $password = $_POST['password'];
-  if ($username == 'admnin' && $password == 'admin'){
-    header("Location: admin.php");
+  if ($username == 'admin' && $password == 'admin'){
+    $_SESSION["User"] = 'admnin';
+    header("Location: adminview.php");
   }
-  $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
-  $stmt = $dbh->query($sql);
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  else{
+    $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
+    $stmt = $dbh->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $_SESSION["Customer_Email"] = $row['Customer_Email'];
-
-  if ($row && password_verify($password, $row['Password'])) {
-    header("Location: view.php");
-  } else {
-    echo "<p>Login failed. Please try again<p>";
+    if ($row && password_verify($password, $row['Password'])) {
+      $_SESSION["User"] = $row['Customer_Email'];
+      header("Location: view.php");
+    }
+    else {
+      echo "<p>Login failed. Please try again<p>";
+  }
   }
 }
 
