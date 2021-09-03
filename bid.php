@@ -12,15 +12,18 @@ if (isset($_POST['back'])){
 if (isset($_POST['bid'])){
     $id = $_POST['id'];
     $amount = $_POST['amount'];
-    $document = $collection->find([ '_id' => $id ]);
+    $document = $collection->find(['_id' => $id]);
 
-    $sql = "";
-    $stmt = $dbh->prepare($sql);
-    $result = $stmt->execute([]);
 
-    if(empty($document)){
+
+    $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
+    $stmt = $dbh->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($document == null){
       echo 'This auction does not exist';
     }
+    else{
     foreach ($document as $one) {
 
       if (date('y-m-d') > $one['closingDate']) {
@@ -29,10 +32,16 @@ if (isset($_POST['bid'])){
       elseif ($amount < $one['minimunBid']) {
         echo 'The bid amount is too low';
       }
-      elseif ($amount < ) {
-
+      elseif ($amount < $row['current']) {
+        echo 'The bid amount is too low';
+      }
+      else{
+        $sql1 = "INSERT INTO bid (Customer_Email, Auction_ID, Bid) values (?,?,?)";
+        $stmt1 = $dbh->prepare($sql);
+        $result1 = $stmt1->execute([$_SESSION['User'], $id, $amount]);
       }
     }
+  }
 }
 
 ?>

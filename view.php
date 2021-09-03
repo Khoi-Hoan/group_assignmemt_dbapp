@@ -21,14 +21,13 @@ if (isset($_POST['create'])){
 }
 
 $document = $collection->find([]);
-$sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = ?";
-$stmt = $dbh->prepare($sql);
 
 echo '_____________________________________________ <br> <br>';
 foreach ($document as $one) {
-  $result = $stmt->execute([$one['_id']]);
-  $row = $result->fetch(PDO::FETCH_ASSOC);
-  
+    $id = $one['_id'];
+    $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
+    $stmt = $dbh->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     echo 'ID : ' . $one['_id'] . '<br>';
     echo 'Product : ' . $one['productName'] . '<br>';
     echo 'Minimum Bid : ' . $one['minimunBid'] . '<br>';

@@ -58,6 +58,14 @@ require_once('db.php')
           <p><label for="country"><b>Country</b></label>
           <input type="text" name="country" required></p>
 
+          <p><label for="cars"><b>Choose a car:</b></label>
+            <select name="cars" id="cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select></p>
+
           <p><input type="submit" name="create" value="Sign Up"</p>
         </div>
       </form>
