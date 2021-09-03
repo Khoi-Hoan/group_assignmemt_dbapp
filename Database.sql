@@ -30,12 +30,10 @@ CREATE TABLE `Customer` (
 );
 
 CREATE TABLE `Bid` (
-  `Customer_Email` varchar(255),
+  `Customer_Email` varchar(100),
   `Auction_ID` int(9),
   `Bid` float,
   PRIMARY KEY (`Customer_Email`, `Auction_ID`),
   FOREIGN KEY (`Auction_ID`) REFERENCES `Auction`(`Auction_ID`),
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
 );
-
- 
