@@ -3,8 +3,7 @@
 session_start();
 require_once ('db.php');
 require_once ('vendor/autoload.php');
-$client = new MongoDB\Client('mongodb://localhost:27017');
-$collection = $client->auction->auction;
+
 if (isset($_POST['back'])){
   header("Location: view.php");
 }
@@ -12,24 +11,24 @@ if (isset($_POST['back'])){
 if (isset($_POST['bid'])){
     $id = $_POST['id'];
     $amount = $_POST['amount'];
-    $document = $collection->find(['_id' => $id]);
 
-
+    $client = new MongoDB\Client('mongodb://localhost:27017');
+    $collection = $client->auction->auction;
+    $filter = ['_id' => new MongoDB\BSON\ObjectId($id)];
+    $document = $collection->findOne($filter);
 
     $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($document == null){
+    if(empty($document)){
       echo 'This auction does not exist';
     }
     else{
-    foreach ($document as $one) {
-
-      if (date('y-m-d') > $one['closingDate']) {
+      if (date('y-m-d') > $document['closingDate']) {
         echo 'This auction is expired';
       }
-      elseif ($amount < $one['minimunBid']) {
+      elseif ($amount < $document['minimunBid']) {
         echo 'The bid amount is too low';
       }
       elseif ($amount < $row['current']) {
@@ -37,10 +36,9 @@ if (isset($_POST['bid'])){
       }
       else{
         $sql1 = "INSERT INTO bid (Customer_Email, Auction_ID, Bid) values (?,?,?)";
-        $stmt1 = $dbh->prepare($sql);
+        $stmt1 = $dbh->prepare($sql1);
         $result1 = $stmt1->execute([$_SESSION['User'], $id, $amount]);
       }
-    }
   }
 }
 

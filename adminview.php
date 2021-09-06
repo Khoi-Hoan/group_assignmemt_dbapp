@@ -3,7 +3,7 @@ session_start();
 ?>
 <form method="post">
    <div>
-    <input type="submit" name="Transation" value="Transation">
+    <input type="submit" name="transation" value="Transation">
     <input type="submit" name="create" value="Create">
    </div>
 </form>
@@ -13,11 +13,8 @@ require_once 'vendor/autoload.php';
 $client = new MongoDB\Client('mongodb://localhost:27017');
 $collection = $client->auction->auction;
 
-if (isset($_POST['bid'])){
-  header('Location: bid.php');
-}
-if (isset($_POST['create'])){
-  header('Location: create.php');
+if (isset($_POST['transation']) && ($_SESSION["User"] = 'admin')){
+  header('Location: transation.php');
 }
 
 $document = $collection->find([]);

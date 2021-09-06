@@ -15,10 +15,12 @@ require_once('db.php')
         $address = $_POST['address'];
         $city = $_POST['city'];
         $country = $_POST['country'];
+        $branch = $_POST['branch'];
+        $profile = $_POST['profile'];
 
-        $sql = "insert into customer (Customer_Email, Password, Phone, First_Name, Last_Name, Customer_ID, Address, City, Country) values (?,?,?,?,?,?,?,?,?)";
+        $sql = "insert into customer (Customer_Email,Branch_Code , Password, Phone, First_Name, Last_Name, Customer_ID, Address, City, Country, Balance, Profile_Picture) values (?,?,?,?,?,?,?,?,?,?, 0.00,?)";
         $stmt = $dbh->prepare($sql);
-        $result = $stmt->execute([$email, $hash, $phone, $firstname, $lastname, $id, $address, $city, $country]);
+        $result = $stmt->execute([$email,$branch , $hash, $phone, $firstname, $lastname, $id, $address, $city, $country, $profile]);
         if ($result){
           echo 'Create an account Successfully';
           header('Location: login.php');
@@ -58,13 +60,17 @@ require_once('db.php')
           <p><label for="country"><b>Country</b></label>
           <input type="text" name="country" required></p>
 
-          <p><label for="cars"><b>Choose a car:</b></label>
-            <select name="cars" id="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+          <p><label for="branch"><b>Choose a branch:</b></label>
+            <select name="branch" id="branch" required>
+            <option value="as">Asia</option>
+            <option value="eu">Europe</option>
+            <option value="na">North America</option>
+            <option value="sa">South America</option>
+            <option value="oc">Oceania</option>
           </select></p>
+
+          <p><label for="profile">Profile picture:</label>
+          <input type="file" name="profile" accept="image/png, image/jpeg"></p>
 
           <p><input type="submit" name="create" value="Sign Up"</p>
         </div>

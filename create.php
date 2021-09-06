@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');
 $collection = $client->auction->auction;
