@@ -1,9 +1,19 @@
+<form method="post">
+   <div>
+    <input type="submit" name="back" value="Return main Page">
+   </div>
+</form>
+
 <?php
 session_start();
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');
 $collection = $client->auction->auction;
+
+if (isset($_POST['back'])){
+  header("Location: view.php");
+}
 
 if(isset($_POST['create'])){
 

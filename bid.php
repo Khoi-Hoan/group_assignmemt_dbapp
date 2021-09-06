@@ -1,3 +1,8 @@
+<form method="post">
+   <div>
+    <input type="submit" name="back" value="Return main Page">
+   </div>
+</form>
 
 <?php
 session_start();
@@ -21,25 +26,33 @@ if (isset($_POST['bid'])){
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $user = $_SESSION['User'];
+    $sql1 = "SELECT Balance FROM Customer WHERE Customer_Email = '$user'";
+    $stmt1 = $dbh->query($sql1);
+    $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+
     if(empty($document)){
       echo 'This auction does not exist';
     }
+    elseif (date('Y-m-d') > $document['closingDate']) {
+      echo date('Y-m-d') . $document['closingDate'];
+      echo 'This auction is expired';
+    }
+    elseif ($amount < $document['minimunBid']) {
+      echo 'The bid amount is too low';
+    }
+    elseif ($amount <= $row['current']) {
+      echo 'The bid amount is too low';
+    }
+    elseif ($row1['Balance'] - $amount < 0) {
+      echo 'Your Balance is to low to place this amount of bid';
+    }
     else{
-      if (date('y-m-d') > $document['closingDate']) {
-        echo 'This auction is expired';
-      }
-      elseif ($amount < $document['minimunBid']) {
-        echo 'The bid amount is too low';
-      }
-      elseif ($amount < $row['current']) {
-        echo 'The bid amount is too low';
-      }
-      else{
-        $sql1 = "INSERT INTO bid (Customer_Email, Auction_ID, Bid) values (?,?,?)";
-        $stmt1 = $dbh->prepare($sql1);
-        $result1 = $stmt1->execute([$_SESSION['User'], $id, $amount]);
-      }
-  }
+      echo 'Place bid Successfully';
+      $sql2 = "INSERT INTO bid (Customer_Email, Auction_ID, Bid) values (?,?,?) ON DUPLICATE KEY UPDATE Bid = $amount";
+      $stmt2 = $dbh->prepare($sql2);
+      $result = $stmt2->execute([$user, $id, $amount]);
+    }
 }
 
 ?>
@@ -54,8 +67,5 @@ if (isset($_POST['bid'])){
    </div>
    <div>
     <input type="submit" name="bid" value="Place Bid">
-   </div>
-   <div>
-    <input type="submit" name="back" value="Return main Page">
    </div>
 </form>

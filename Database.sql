@@ -22,7 +22,7 @@ CREATE TABLE `Customer` (
   `Address` varchar(255),
   `City` varchar(20),
   `Country` varchar(20),
-  `Balance` decimal(10, 2),
+  `Balance` decimal(11, 0),
   `Profile_Picture` BLOB,
   PRIMARY KEY (`Customer_Email`),
   FOREIGN KEY (`Branch_Code`) REFERENCES `Branch`(`Branch_Code`),
@@ -32,7 +32,7 @@ CREATE TABLE `Customer` (
 CREATE TABLE `Bid` (
   `Customer_Email` varchar(100),
   `Auction_ID` varchar(30),
-  `Bid` decimal(6, 2),
+  `Bid` decimal(9, 0),
   PRIMARY KEY (`Customer_Email`, `Auction_ID`),
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
 );

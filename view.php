@@ -9,6 +9,9 @@ session_start();
    </div>
 </form>
 <?php
+if($_SESSION['User'] == 'admin'){
+  header('Location: adminview.php');
+}
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');
