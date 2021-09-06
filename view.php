@@ -5,6 +5,7 @@ session_start();
    <div>
     <input type="submit" name="bid" value="Bid">
     <input type="submit" name="create" value="Create">
+    <input type="submit" name="logout" value="Log Out">
    </div>
 </form>
 <?php
@@ -18,6 +19,9 @@ if (isset($_POST['bid'])){
 }
 if (isset($_POST['create'])){
   header('Location: create.php');
+}
+if (isset($_POST['logout'])){
+  header('Location: logout.php');
 }
 
 $document = $collection->find([]);

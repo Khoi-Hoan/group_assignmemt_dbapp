@@ -4,7 +4,7 @@ session_start();
 <form method="post">
    <div>
     <input type="submit" name="transation" value="Transation">
-    <input type="submit" name="create" value="Create">
+    <input type="submit" name="logout" value="Log Out">
    </div>
 </form>
 <?php
@@ -15,6 +15,9 @@ $collection = $client->auction->auction;
 
 if (isset($_POST['transation']) && ($_SESSION["User"] = 'admin')){
   header('Location: transation.php');
+}
+if (isset($_POST['logout'])){
+  header('Location: logout.php');
 }
 
 $document = $collection->find([]);
