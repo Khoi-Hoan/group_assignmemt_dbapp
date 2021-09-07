@@ -6,6 +6,7 @@
 
 <?php
 session_start();
+if (isset($_SESSION['User'])){
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');
@@ -28,6 +29,11 @@ if(isset($_POST['create'])){
     'ownerEmail' => $_SESSION['User']
   ]);
   header("Location: view.php");
+}
+}
+else {
+  header('Location: login.php');
+  echo 'You have to login first';
 }
 ?>
 <form method="post">

@@ -8,12 +8,13 @@ session_start();
    </div>
 </form>
 <?php
+if ($_SESSION["User"] = 'admin') {
 require_once ('db.php');
 require_once 'vendor/autoload.php';
 $client = new MongoDB\Client('mongodb://localhost:27017');
 $collection = $client->auction->auction;
 
-if (isset($_POST['transation']) && ($_SESSION["User"] = 'admin')){
+if (isset($_POST['transation'])){
   header('Location: transation.php');
 }
 if (isset($_POST['logout'])){
@@ -40,5 +41,11 @@ foreach ($document as $one) {
     echo 'Closing Date: ' . $one['closingDate'] . '<br>';
     echo 'Seller: ' . $one['ownerEmail'] . '<br>';
     echo '_____________________________________________ <br> <br>';
+}
+
+}
+else {
+  header('Location: login.php');
+  echo 'You have to login first';
 }
 ?>

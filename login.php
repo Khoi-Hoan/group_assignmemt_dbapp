@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['db_user'] = 'signinnup';
+
 require_once 'db.php';
 
 if (isset($_POST['register'])){
@@ -10,6 +12,7 @@ if (isset($_POST['act'])) {
   $password = $_POST['password'];
   if ($username == 'admin' && $password == 'admin'){
     $_SESSION["User"] = 'admnin';
+    $_SESSION['db_user'] = 'auctionadmin';
     header("Location: adminview.php");
   }
   else{
@@ -19,6 +22,7 @@ if (isset($_POST['act'])) {
 
     if ($row && password_verify($password, $row['Password'])) {
       $_SESSION["User"] = $row['Customer_Email'];
+      $_SESSION['db_user'] = 'auctionguest';
       header("Location: view.php");
     }
     else {
@@ -30,18 +34,17 @@ if (isset($_POST['act'])) {
 ?>
 
 <form method="post">
+  <h2>Login</h2>
   <div>
-    <span>User</span><br>
+    <b>User</b><br>
     <input type="text" name="user">
    </div>
   <div>
-    <span>Password</span><br>
+    <b>Password</b><br>
     <input type="password" name="password">
    </div>
    <div>
     <input type="submit" name="act" value="Login">
-   </div>
-   <div>
     <input type="submit" name="register" value="Sign up">
    </div>
 </form>

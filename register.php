@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('db.php')
 ?>
   <body>
@@ -32,7 +33,7 @@ require_once('db.php')
       <form method="post">
         <div>
           <h1>Register</h1>
-          <p>Fill up the form with correct values.</p>
+          <h3>Fill up the form with correct values.</h3>
           <p><label for="email"><b>E-mail</b></label>
           <input type="email" name="email" required></p>
 
@@ -69,7 +70,7 @@ require_once('db.php')
             <option value="oc">Oceania</option>
           </select></p>
 
-          <p><label for="profile">Profile picture:</label>
+          <p><label for="profile"><b>Profile picture:</b></label>
           <input type="file" name="profile" accept="image/png, image/jpeg"></p>
 
           <p><input type="submit" name="create" value="Sign Up"</p>

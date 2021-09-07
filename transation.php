@@ -9,17 +9,16 @@ session_start();
  </form>
 
 <?php
-require_once 'db.php';
-require_once 'vendor/autoload.php';
-$client = new MongoDB\Client('mongodb://localhost:27017');
-$collection = $client->auction->auction;
-
-if (isset($_POST['back'])){
-  header("Location: view.php");
-}
-
 if ($_SESSION['User'] == 'admin'){
+  require_once 'db.php';
+  require_once 'vendor/autoload.php';
+  $client = new MongoDB\Client('mongodb://localhost:27017');
+  $collection = $client->auction->auction;
 
+  if (isset($_POST['back'])){
+    header("Location: view.php");
+  }
+  
   if (isset($_POST['add'])){
     $user = $_POST['user'];
     $amount = $_POST['amount'];
@@ -48,6 +47,10 @@ if ($_SESSION['User'] == 'admin'){
 
     echo 'Auction: ' . $id . "has been deleted.";
   }
+}
+else {
+  header('Location: login.php');
+  echo 'You have to login first';
 }
 ?>
 

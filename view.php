@@ -12,6 +12,9 @@ session_start();
 if($_SESSION['User'] == 'admin'){
   header('Location: adminview.php');
 }
+
+if (isset($_SESSION['User'])){
+
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');
@@ -35,7 +38,7 @@ foreach ($document as $one) {
     $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo 'ID : ' . $one['_id'] . '<br>';
+    echo '<b>' . 'ID : ' . $one['_id'] . '<br>' . '</b>';
     echo 'Product : ' . $one['productName'] . '<br>';
     echo 'Minimum Bid : ' . $one['minimunBid'] . '<br>';
     if ($row && $row['current'] != null){
@@ -47,5 +50,11 @@ foreach ($document as $one) {
     echo 'Closing Date: ' . $one['closingDate'] . '<br>';
     echo 'Seller: ' . $one['ownerEmail'] . '<br>';
     echo '_____________________________________________ <br> <br>';
+}
+
+}
+else {
+  header('Location: login.php');
+  echo 'You have to login first';
 }
 ?>

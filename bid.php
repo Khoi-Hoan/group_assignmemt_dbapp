@@ -6,9 +6,17 @@
 
 <?php
 session_start();
+if (isset($_SESSION['User'])){
+
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 
+$user = $_SESSION['User'];
+$sql1 = "SELECT Balance FROM Customer WHERE Customer_Email = '$user'";
+$stmt1 = $dbh->query($sql1);
+$row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+
+echo '<b>' . 'Your Balance is ' . $row1['Balance'] . '<br>' . '</b>';
 if (isset($_POST['back'])){
   header("Location: view.php");
 }
@@ -26,10 +34,6 @@ if (isset($_POST['bid'])){
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $user = $_SESSION['User'];
-    $sql1 = "SELECT Balance FROM Customer WHERE Customer_Email = '$user'";
-    $stmt1 = $dbh->query($sql1);
-    $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
 
     if(empty($document)){
       echo 'This auction does not exist';
@@ -48,11 +52,23 @@ if (isset($_POST['bid'])){
       echo 'Your Balance is to low to place this amount of bid';
     }
     else{
-      echo 'Place bid Successfully';
-      $sql2 = "INSERT INTO bid (Customer_Email, Auction_ID, Bid) values (?,?,?) ON DUPLICATE KEY UPDATE Bid = $amount";
+      $sql2 = "INSERT INTO Bid (Customer_Email, Auction_ID, Bid) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Bid = $amount";
       $stmt2 = $dbh->prepare($sql2);
       $result = $stmt2->execute([$user, $id, $amount]);
+      if ($result){
+        echo 'Place bid Successfully';
+      }
+      else {
+        var_dump($result);
+        echo 'There is an error';
+      }
     }
+}
+
+}
+else {
+  header('Location: login.php');
+  echo 'You have to login first';
 }
 
 ?>
