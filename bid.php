@@ -30,11 +30,6 @@ if (isset($_POST['bid'])){
     $filter = ['_id' => new MongoDB\BSON\ObjectId($id)];
     $document = $collection->findOne($filter);
 
-    $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
-    $stmt = $dbh->query($sql);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
     if(empty($document)){
       echo 'This auction does not exist';
     }
@@ -45,12 +40,6 @@ if (isset($_POST['bid'])){
     elseif ($amount < $document['minimunBid']) {
       echo 'The bid amount is too low';
     }
-    elseif ($amount <= $row['current']) {
-      echo 'The bid amount is too low';
-    }
-    elseif ($row1['Balance'] - $amount < 0) {
-      echo 'Your Balance is to low to place this amount of bid';
-    }
     else{
       $sql2 = "INSERT INTO Bid (Customer_Email, Auction_ID, Bid) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Bid = $amount";
       $stmt2 = $dbh->prepare($sql2);
@@ -59,8 +48,7 @@ if (isset($_POST['bid'])){
         echo 'Place bid Successfully';
       }
       else {
-        var_dump($result);
-        echo 'There is an error';
+        echo $stmt2->errorInfo();
       }
     }
 }

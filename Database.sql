@@ -71,13 +71,13 @@ BEGIN
   SELECT MAX(Bid) INTO current_max FROM Bid WHERE Auction_ID = NEW.Auction_ID;
 
   IF NEW.Bid <= current_max THEN
-    SIGNAL SQLSTATE '45000' set message_text = "The Bid amount is too tow"
+    SIGNAL SQLSTATE '45000' set message_text = "The Bid amount is too tow";
   END IF;
 
   SELECT Balance INTO user_balance FROM Customer WHERE Customer_Email = NEW.Customer_Email;
 
-  IF NEW.Bid < user_balance THEN
-    SIGNAL SQLSTATE '45000' set message_text = "Your Balance is to low to place this amount of bid"
+  IF NEW.Bid > user_balance THEN
+    SIGNAL SQLSTATE '45000' set message_text = "Your Balance is to low to place this amount of bid";
   END IF;
 END $$
 
