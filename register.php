@@ -5,7 +5,7 @@ require_once('db.php')
   <body>
     <div>
       <?php
-      if(isset($_POST['create'])){
+      if(isset($_POST['create'])){ //recieve fields for user to insert new account to database
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $id = $_POST['id'];

@@ -21,7 +21,7 @@ if (isset($_POST['back'])){
   header("Location: view.php");
 }
 
-if (isset($_POST['bid'])){
+if (isset($_POST['bid'])){    //user can place the amount of bid for the auction the one by enter its id
     $id = $_POST['id'];
     $amount = $_POST['amount'];
 
@@ -30,7 +30,7 @@ if (isset($_POST['bid'])){
     $filter = ['_id' => new MongoDB\BSON\ObjectId($id)];
     $document = $collection->findOne($filter);
 
-    if(empty($document)){
+    if(empty($document)){ //check for some business rule first then the mysql trigger check the rest
       echo 'This auction does not exist';
     }
     elseif (date('Y-m-d') > $document['closingDate']) {

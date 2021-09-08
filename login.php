@@ -4,18 +4,18 @@ $_SESSION['db_user'] = 'signinnup';
 
 require_once 'db.php';
 
-if (isset($_POST['register'])){
+if (isset($_POST['register'])){   //move user to register page
   header('Location: register.php');
 }
-if (isset($_POST['act'])) {
+if (isset($_POST['act'])) {   //if the hav an account they can fill in with eith phone number or email together with pass word to login
   $username = $_POST['user'];
   $password = $_POST['password'];
-  if ($username == 'admin' && $password == 'admin'){
+  if ($username == 'admin' && $password == 'admin'){    //admin account
     $_SESSION["User"] = 'admnin';
     $_SESSION['db_user'] = 'auctionadmin';
     header("Location: adminview.php");
   }
-  else{
+  else{   //regular user account
     $sql = "SELECT * FROM Customer WHERE Customer_Email='$username' OR Phone='$username'";
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);

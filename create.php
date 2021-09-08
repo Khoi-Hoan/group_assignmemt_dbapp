@@ -6,7 +6,7 @@
 
 <?php
 session_start();
-if (isset($_SESSION['User'])){
+if (isset($_SESSION['User'])){  //the user with account can fill in and create new auction 
 require_once ('db.php');
 require_once ('vendor/autoload.php');
 $client = new MongoDB\Client('mongodb://localhost:27017');

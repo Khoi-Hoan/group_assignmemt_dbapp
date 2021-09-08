@@ -13,7 +13,7 @@ if($_SESSION['User'] == 'admin'){
   header('Location: adminview.php');
 }
 
-if (isset($_SESSION['User'])){
+if (isset($_SESSION['User'])){    //after login the user will able to view all auction and navigate page in this main page
 
 require_once ('db.php');
 require_once ('vendor/autoload.php');
@@ -30,7 +30,7 @@ if (isset($_POST['logout'])){
   header('Location: logout.php');
 }
 
-$document = $collection->find([]);
+$document = $collection->find([],['sort' => ['closingDate' => 1]]);
 
 echo '_____________________________________________ <br> <br>';
 foreach ($document as $one) {
@@ -53,7 +53,7 @@ foreach ($document as $one) {
 }
 
 }
-else {
+else { // this part will be in eveypage to make sure user is logged in
   header('Location: login.php');
   echo 'You have to login first';
 }

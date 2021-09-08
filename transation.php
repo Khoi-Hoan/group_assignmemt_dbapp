@@ -19,7 +19,7 @@ if ($_SESSION['User'] == 'admin'){
     header("Location: view.php");
   }
 
-  if (isset($_POST['add'])){
+  if (isset($_POST['add'])){    //admin can add money to the user balance
     $user = $_POST['user'];
     $amount = $_POST['amount'];
 
@@ -37,7 +37,7 @@ if ($_SESSION['User'] == 'admin'){
     echo $row1['Customer_Email'] . " Balance: " . $row2['Balance'] . " => " . $row1['Balance'];
   }
 
-  if (isset($_POST['tranfer'])){
+  if (isset($_POST['tranfer'])){    //the admin can tranfer money from buyer to seller of an auction after it expired
     $id = $_POST['aid'];
 
     $doc = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
@@ -66,7 +66,7 @@ if ($_SESSION['User'] == 'admin'){
       $stmt4 = $dbh->query($sql4);
       $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
 
-      try {
+      try {  //transaction logic
         $dbh->beginTransaction();
         if ($amount > $row4['Balance']){
           echo "Buyer account is too low";
@@ -101,7 +101,7 @@ if ($_SESSION['User'] == 'admin'){
     }
   }
 
-  if (isset($_POST['delete'])){
+  if (isset($_POST['delete'])){  //after finish transaction admin can remove the auction
     $id = $_POST['id'];
 
     $doc = $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectId($id)]);

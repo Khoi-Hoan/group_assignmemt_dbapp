@@ -8,7 +8,7 @@ session_start();
    </div>
 </form>
 <?php
-if ($_SESSION["User"] = 'admin') {
+if ($_SESSION["User"] = 'admin') { //this is similar as user main page but have functions for admin
 require_once ('db.php');
 require_once 'vendor/autoload.php';
 $client = new MongoDB\Client('mongodb://localhost:27017');
@@ -29,7 +29,7 @@ foreach ($document as $one) {
     $sql = "SELECT MAX(Bid) AS current FROM Bid WHERE Auction_ID = '$id'";
     $stmt = $dbh->query($sql);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo 'ID : ' . $one['_id'] . '<br>';
+    echo '<b>' . 'ID : ' . $one['_id'] . '<br>' . '</b>';
     echo 'Product : ' . $one['productName'] . '<br>';
     echo 'Minimum Bid : ' . $one['minimunBid'] . '<br>';
     if ($row && $row['current'] != null){
