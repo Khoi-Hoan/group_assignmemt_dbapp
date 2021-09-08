@@ -18,7 +18,7 @@ if ($_SESSION['User'] == 'admin'){
   if (isset($_POST['back'])){
     header("Location: view.php");
   }
-  
+
   if (isset($_POST['add'])){
     $user = $_POST['user'];
     $amount = $_POST['amount'];
@@ -35,6 +35,54 @@ if ($_SESSION['User'] == 'admin'){
     $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
 
     echo $row1['Customer_Email'] . " Balance: " . $row2['Balance'] . " => " . $row1['Balance'];
+  }
+
+  if (isset($_POST['tranfer'])){
+    $id = $_POST['aid'];
+
+    $doc = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+
+    if(empty($doc)){
+      echo 'This auction does not exist';
+    }
+    else{
+      $seller = $doc['ownerEmail'];
+
+      $sql1 = "SELECT Balance FROM Customer WHERE Customer_Email = '$seller'";
+      $stmt1 = $dbh->query($sql1);
+      $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+      echo $row1['Balance'];
+
+      $sql2 = "SELECT MAX(Bid) AS amount FROM Bid WHERE Auction_ID = '$id'";
+      $stmt2 = $dbh->query($sql2);
+      $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+      $amount = $row2['amount'];
+      echo $row2['amount'];
+
+      $sql3 = "SELECT Customer_Email AS buyer FROM Bid WHERE Auction_ID = '$id'  AND Bid = '$amount'";
+      $stmt3 = $dbh->query($sql3);
+      $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+      $buyer = $row3['buyer'];
+      echo $row3['buyer'];
+
+      $sql4 = "SELECT Balance FROM Customer WHERE Customer_Email = '$buyer'";
+      $stmt4 = $dbh->query($sql4);
+      $row4 = $stmt4->fetch(PDO::FETCH_ASSOC);
+      echo $row4['Balance'];
+
+      $sql = "CALL sp_tranfer_money('$id','$seller')";
+      $stmt = $dbh->prepare($sql);
+      $res = $stmt->execute();
+
+      if ($res){
+        echo 'Tranfer successfully';
+      }
+      else{
+        var_dump($res);
+      }
+
+
+    }
   }
 
   if (isset($_POST['delete'])){
@@ -57,13 +105,22 @@ else {
 <form method="post">
   <div>
     <h2>Add Money To An Account:</h2>
-    <span>User Email:</span> <input type="text" name="user"><br>
-    <span>Add:</span> <input type="number" name="amount"><br>
+    <span>User Email:</span> <input type="text" name="user" required><br>
+    <span>Add:</span> <input type="number" name="amount" required><br>
     <input type="submit" name="add" value="Add To Account"><br>
   </div>
+</form>
+<form method="post">
+  <div>
+    <h2>Tranfer money for finishing Auction:</h2>
+    <span>Aution ID: </span> <input type="text" name="aid" required><br>
+    <input type="submit" name="tranfer" value="Submit Tranfer"><br>
+  </div>
+</form>
+<form method="post">
   <div>
     <h2>Delete An Auction:</h2>
-    <span>Aution ID: </span> <input type="text" name="id"><br>
+    <span>Aution ID: </span> <input type="text" name="id" required><br>
     <input type="submit" name="delete" value="Delete Auction"><br>
   </div>
 </form>

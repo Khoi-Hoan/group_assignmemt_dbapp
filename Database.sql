@@ -14,7 +14,7 @@ CREATE TABLE `Customer` (
   `Customer_Email` varchar(100),
   `Branch_Code` char(2),
   `Password` char(60),
-  `Phone` char(10),
+  `Phone` char(10) UNIQUE NOT NULL,
   `First_Name` varchar(20),
   `Last_Name` varchar(20),
   `Customer_ID` char(12),
@@ -79,6 +79,35 @@ BEGIN
   IF NEW.Bid > user_balance THEN
     SIGNAL SQLSTATE '45000' set message_text = "Your Balance is to low to place this amount of bid";
   END IF;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_tranfer_money(IN a_id varchar(25), IN seller varchar(100))
+BEGIN
+	declare amount decimal(9, 0);
+    declare buyer varchar(100);
+    declare after_bal decimal(11, 0);
+
+    SELECT MAX(Bid) INTO amount FROM Bid WHERE Auction_ID = a_id;
+	select Customer_Email into buyer from Bid where Auction_ID = a_id and Bid = amount;
+
+    start transaction;
+
+    update Customer set Balance = Balance + amount where Customer_Email = seller;
+    update Customer set Balance = Balance - amount where Customer_Email = buyer;
+
+    select Balance into after_bal from customer where Customer_Email = buyer;
+
+    if after_bal < 0 then
+		rollback;
+        SIGNAL SQLSTATE '45000' set message_text = "The Balance is to low for this tranfer";
+    else
+		commit;
+    end if;
+
 END $$
 
 DELIMITER ;

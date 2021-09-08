@@ -48,7 +48,7 @@ if (isset($_POST['bid'])){
         echo 'Place bid Successfully';
       }
       else {
-        echo $stmt2->errorInfo();
+        echo "Bid is invalid, either your bid is lower then current bid or you do not have enough money";
       }
     }
 }

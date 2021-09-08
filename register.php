@@ -23,8 +23,11 @@ require_once('db.php')
         $stmt = $dbh->prepare($sql);
         $result = $stmt->execute([$email,$branch , $hash, $phone, $firstname, $lastname, $id, $address, $city, $country, $profile]);
         if ($result){
-          echo 'Create an account Successfully';
+          echo 'Create an account successfully';
           header('Location: login.php');
+        }
+        else {
+          echo "Create an account failed";
         }
       }
       ?>
@@ -53,13 +56,13 @@ require_once('db.php')
           <input type="password" name="password" required></p>
 
           <p><label for="address"><b>Address</b></label>
-          <input type="text" name="address" required></p>
+          <input type="text" name="address"></p>
 
           <p><label for="city"><b>City</b></label>
-          <input type="text" name="city" required></p>
+          <input type="text" name="city"></p>
 
           <p><label for="country"><b>Country</b></label>
-          <input type="text" name="country" required></p>
+          <input type="text" name="country"></p>
 
           <p><label for="branch"><b>Choose a branch:</b></label>
             <select name="branch" id="branch" required>
