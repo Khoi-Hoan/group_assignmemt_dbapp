@@ -5,6 +5,7 @@ require_once('db.php')
   <body>
     <div>
       <?php
+      $_SESSION['db_user'] = 'signinnup';
       if(isset($_POST['create'])){ //recieve fields for user to insert new account to database
         $email = $_POST['email'];
         $phone = $_POST['phone'];

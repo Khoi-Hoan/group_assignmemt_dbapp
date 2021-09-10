@@ -36,7 +36,7 @@ CREATE TABLE `Bid` (
   FOREIGN KEY (`Customer_Email`) REFERENCES `Customer`(`Customer_Email`)
 ) ENGINE=InnoDB;
 
-CREATE INDEX Auction_ID_idx ON Bid (Bid);
+CREATE INDEX Auction_ID_idx ON Bid (Auction_ID);
 
 INSERT INTO Branch (Branch_Code, Branch_Name, Address, Hotline) VALUES ('as','Asia','Vietnam','+84 1900 1234');
 INSERT INTO Branch (Branch_Code, Branch_Name, Address, Hotline) VALUES ('eu','Europe','Italy','+39 1700 4321');
