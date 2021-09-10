@@ -111,3 +111,11 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+
+INSERT INTO Customer (Customer_Email, Branch_Code, Password, Phone, First_Name, Last_Name, Customer_ID, Balance)
+VALUES ('user1@test.com', 'as', '$2y$10$v0X89tS16B8v/EJQHjQsH.GA.58KbrhPuXl9zPc7/s/b1oLfsLTtq', '12345678', 'Jane', 'Doe', '12345678', '14000');
+
+INSERT INTO Customer (Customer_Email, Branch_Code, Password, Phone, First_Name, Last_Name, Customer_ID, Balance)
+VALUES ('user2@test.com', 'as', '$2y$10$WpOO.Nh8ncwcFvphT5aUv.S39XqzpYbIg36cfgLawPKIViOOdVHTK', '87654321', 'Bobby', 'Brown', '87654321', '22000');
